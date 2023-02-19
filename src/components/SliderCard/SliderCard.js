@@ -11,6 +11,11 @@ const CardStyled = styled(Card)`
 
 const CardMediaStyled = styled(CardMedia)`
     height: 450px !important;
+    width: 100%;
+    max-width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 
 const SliderCard = () => {
