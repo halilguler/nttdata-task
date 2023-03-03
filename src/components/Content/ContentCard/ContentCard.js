@@ -1,24 +1,22 @@
 import styled from "@emotion/styled";
-import { FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import {
   Box,
-  Button,
+  Grid,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  Collapse,
   IconButton,
 } from "@mui/material";
 import React from "react";
 import Text from "../../Text/Text";
-import CardImage from "./images/card1.png";
 
-const BoxStyled = styled(Box)`
+const GridStyled = styled(Grid)`
   border: 1px solid #0004;
   border-radius: 5px;
   padding: 1rem;
-  height: 100%;
+  max-width: 300px;
+  height: fit-content;
   & .MuiCard-root {
     height: ${({ showMore }) => (showMore ? "auto" : "auto")};
   }
@@ -34,18 +32,32 @@ const TextStyled = styled(Text)`
   max-height: ${({ showMore }) => (showMore ? "100%" : "2.8rem")};
 `;
 
-const ContentCard = () => {
+const CardMediaStyled = styled(CardMedia)`
+  height: 100%;
+  width: 100%;
+`;
+
+const ContentCard = (props) => {
+  const {
+    id,
+    shoppingMethod,
+    name,
+    imageUrl,
+    description,
+    price,
+    isFavorite,
+    addFavorite,
+  } = props;
   const [showMore, setShowMore] = React.useState(false);
-  const [text, setText] = React.useState(
-    "Sed ac eros vitae odio fringilla pulvinar. Sed nec interdum"
-  );
 
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
   return (
-    <BoxStyled
-      className="flex flex-col w-full sm:w-1/2 md:w-5/12 lg:justify-between lg:4/4 gap-3 p-2"
+    <GridStyled
+      item
+      xs={12}
+      className="flex flex-col md:flex-wrap w-full gap-3 p-2"
       my={4}
       showMore={showMore}
     >
@@ -54,7 +66,7 @@ const ContentCard = () => {
           position: "relative",
         }}
       >
-        <CardMedia component="img" height="140" image={CardImage} />
+        <CardMediaStyled component="img" image={imageUrl} />
         <IconButton
           sx={{
             position: "absolute",
@@ -62,32 +74,35 @@ const ContentCard = () => {
             right: 0,
             zIndex: 1,
           }}
+          onClick={addFavorite}
         >
-          <FavoriteBorder />
+          {isFavorite ? (
+            <Favorite
+              sx={{
+                color: "red",
+              }}
+            />
+          ) : (
+            <FavoriteBorder />
+          )}
         </IconButton>
         <CardContent>
           <Text gutterBottom variant="h5" component="h2">
-            Product Name
+            {name}
           </Text>
           <Box
             className="flex bg-blue-100 text-black px-2 py-1 text-xs font-bold mr-3
           "
           >
             <Text variant="body2" color="text.secondary">
-              1.299,00 TL
+              {price}
             </Text>
           </Box>
-          <Text>Description</Text>
           <TextStyled showMore={showMore}>
-            lorem ipsum dolor sit amet, consectetur
-            {showMore && (
-              <>
-                Sed ac eros vitae odio fringilla pulvinar. Sed nec interdum
-                odio. Praesent eget dapibus mi.
-              </>
-            )}
+            {description}
+            {/* {showMore && <span>{description}</span>} */}
           </TextStyled>
-          {text.length > 20 && (
+          {description.length > 20 && (
             <Text variant="body2" color="textSecondary" component="p">
               <span
                 onClick={handleShowMore}
@@ -101,10 +116,10 @@ const ContentCard = () => {
               </span>
             </Text>
           )}
-          <Text>ücretsiz kargo - aynı gün kargo - 30 gün iade</Text>
+          <Text>{shoppingMethod}</Text>
         </CardContent>
       </Card>
-    </BoxStyled>
+    </GridStyled>
   );
 };
 

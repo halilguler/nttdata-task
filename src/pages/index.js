@@ -1,5 +1,7 @@
-import { combineReducers } from '@reduxjs/toolkit';
-
-const reducer = combineReducers({});
+import { combineReducers } from "@reduxjs/toolkit";
+import cardsSlice from "../features/index";
+const reducer = combineReducers({
+  cardsSlice,
+});
 
 export default reducer;
