@@ -1,1 +1,8 @@
-export const navItems = ['Home', 'About', 'Contact'];
+export const navItems = [
+    { label: "Menu Items" },
+    { label: "Menu Items" },
+    { label: "Menu Items" },
+    { label: "Menu Items" },
+    { label: "Menu Items" },
+    { label: "Menu Items" },
+];

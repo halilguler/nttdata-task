@@ -16,7 +16,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import React from "react";
-import FooterLogo from "../../assets/images/FooterLogo.png";
+import NttLogo from "../../assets/images/nttLogo.png";
 import Text from "../Text/Text";
 
 const GridStyled = styled(Grid)`
@@ -44,7 +44,7 @@ const Footer = () => {
               width: "100%",
             }}
           >
-            <CardMediaStyled component="img" image={FooterLogo} />
+            <CardMediaStyled component="img" image={NttLogo} />
 
             <CardContent
               sx={{

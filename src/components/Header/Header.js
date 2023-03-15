@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 
 import { DrawerComponent } from "./DrawerComponent";
-import { Logo } from "../../assets/svg/appLogo";
+import { Logo } from "../../assets/svg/logo";
 import { Grid } from "@mui/material";
 import AutoCompleteComponent from "./Autocomplete";
 import { Search } from "@mui/icons-material";

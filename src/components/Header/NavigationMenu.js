@@ -6,7 +6,7 @@ function NavigationMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [navItems, setNavItems] = React.useState({
     currentItems: Items,
-    navItems: [],
+    moreItems: [],
   });
 
   const handleClick = (event) => {
@@ -16,40 +16,40 @@ function NavigationMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  window.addEventListener("resize", (event) => {
-    if (
-      event.currentTarget.innerWidth < 900 &&
-      event.currentTarget.innerWidth > 600 &&
-      navItems.navItems.length === 0
-    )
-      return setNavItems((prev) => ({
-        currentItems: Items.slice(0, -4),
-        navItems: navItems.currentItems.slice(2, -1),
-      }));
-    else if (
-      event.currentTarget.innerWidth < 600 &&
-      navItems.navItems.length < 3
-    )
-      return setNavItems((prev) => ({
-        currentItems: Items.slice(0, 2),
-        navItems: Items.slice(-6, -1),
-      }));
-  });
+
+  const navbarResizeEach = (data, size) => {
+    const currentItems = [];
+    const moreItems = [];
+    data.forEach((item) => {
+      if (currentItems.length < size) {
+        currentItems.push(item);
+      } else {
+        moreItems.push(item);
+      }
+    });
+    setNavItems({ currentItems, moreItems });
+  };
+
+  const handleResizeStart = () => {
+    if (window.innerWidth < 400) {
+      navbarResizeEach(Items, 1);
+    } else if (window.innerWidth < 600) {
+      navbarResizeEach(Items, 2);
+    } else if (window.innerWidth < 768) {
+      navbarResizeEach(Items, 3);
+    } else if (window.innerWidth < 1280) {
+      navbarResizeEach(Items, 5);
+    } else if (window.innerWidth < 1440) {
+      navbarResizeEach(Items, 7);
+    } else {
+      navbarResizeEach(Items, 12);
+    }
+  };
+
   useEffect(() => {
-    if (
-      window.innerWidth < 900 &&
-      window.innerWidth > 600 &&
-      navItems.navItems.length === 0
-    )
-      return setNavItems((prev) => ({
-        currentItems: Items.slice(0, -4),
-        navItems: navItems.currentItems.slice(2, -1),
-      }));
-    else if (window.innerWidth < 600 && navItems.navItems.length < 3)
-      return setNavItems((prev) => ({
-        currentItems: Items.slice(0, 2),
-        navItems: Items.slice(-6, -1),
-      }));
+    window.addEventListener("resize", handleResizeStart);
+    handleResizeStart();
+    return () => window.removeEventListener("resize", handleResizeStart);
   }, []);
   return (
     <>
@@ -73,7 +73,7 @@ function NavigationMenu() {
           <span>{label}</span>
         ))}
         <Typography
-          display={navItems.navItems.length ? "block" : "none"}
+          display={navItems?.moreItems?.length ? "block" : "none"}
           onClick={handleClick}
         >
           More
@@ -88,7 +88,11 @@ function NavigationMenu() {
           onClose={handleClose}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "left",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
           }}
           PaperProps={{
             sx: {
@@ -99,7 +103,7 @@ function NavigationMenu() {
             },
           }}
         >
-          {navItems.navItems.map(({ label }) => (
+          {navItems?.moreItems?.map(({ label }) => (
             <span>
               {label} <br />
             </span>

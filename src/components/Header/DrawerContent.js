@@ -18,9 +18,9 @@ export const DrawerContent = memo(({ handleDrawerToggle }) => (
     <Divider />
     <List>
       {navItems.map((item) => (
-        <ListItem key={item} disablePadding>
-          <ListItemButton sx={{ textAlign: "center" }}>
-            <ListItemText primary={item} />
+        <ListItem key={item.label} disablePadding>
+          <ListItemButton sx={{ textAlign: "center", color:"#000" }}>
+            <ListItemText primary={item.label} />
           </ListItemButton>
         </ListItem>
       ))}
